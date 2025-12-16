@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model animal {
+  id_animal    String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_owner     String         @db.Uuid
+  name         String         @db.VarChar(50)
+  breed        String         @db.VarChar(50)
+  chip_number  String?        @unique @db.VarChar(50)
+  birth_date   DateTime?      @db.Date
+  weight       Decimal?       @db.Decimal(5, 2)
+  size         Decimal?       @db.Decimal(5, 2)
+  photo        String?
+  owner        owner          @relation(fields: [id_owner], references: [id_owner], onDelete: Cascade, onUpdate: NoAction, map: "fk_animal_owner")
+  consultation consultation[]
+  treatment    treatment[]    
+  vaccination  vaccination[]
+}
+
+model consultation {
+  id_consultation String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_animal       String    @db.Uuid
+  id_veterinarian String?   @db.Uuid
+  date_visite     DateTime? @db.Date
+  reason          String?
+  diagnosis       String?
+  animal          animal    @relation(fields: [id_animal], references: [id_animal], onDelete: Cascade, onUpdate: NoAction, map: "fk_consultation_animal")
+}
+
+model owner {
+  id_owner   String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  last_name  String   @db.VarChar(30)
+  first_name String?  @db.VarChar(30)
+  phone      String?  @db.VarChar(20)
+  email      String?  @db.VarChar(150)
+  adress     String?
+  animal     animal[]
+}
+
+model treatment {
+  id_treatment   String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_animal      String    @db.Uuid
+  name_treatment String?   @db.VarChar(30)
+  dosage         String?
+  start_date     DateTime? @db.Date
+  end_date       DateTime? @db.Date
+  comment        String?
+  animal         animal    @relation(fields: [id_animal], references: [id_animal], onDelete: Cascade, onUpdate: NoAction, map: "fk_treatment_animal")
+}
+
+model vaccination {
+  id_vaccination String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_animal      String    @db.Uuid
+  vaccine_name   String    @db.VarChar(30)
+  vaccine_date   DateTime? @db.Date
+  reminder_date  DateTime? @db.Date
+  comment        String?
+  animal         animal    @relation(fields: [id_animal], references: [id_animal], onDelete: Cascade, onUpdate: NoAction, map: "fk_vaccination_animal")
+}
+
+model veterinarian {
+  id_veterinarian String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  last_name       String  @db.VarChar(30)
+  first_name      String? @db.VarChar(30)
+  phone           String? @db.VarChar(20)
+  email           String? @db.VarChar(150)
+  adress          String?
+}
