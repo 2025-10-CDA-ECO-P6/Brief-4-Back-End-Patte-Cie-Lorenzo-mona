@@ -1,0 +1,49 @@
+### GET all owners
+GET http://localhost:3000/api/owners
+Accept: application/json
+
+###
+
+### GET owners with pagination
+GET http://localhost:3000/api/owners?page=1&limit=2
+Accept: application/json
+
+###
+
+### GET a specific owner by ID
+GET http://localhost:3000/api/owners/d80c86b7-a873-407d-a98b-af9c53ff9d69
+Accept: application/json
+
+###
+
+### Create a new owner
+POST http://localhost:3000/api/owners
+Content-Type: application/json
+
+{
+  "first_name": "Tata",
+  "phone": "1234567890",
+  "email": "haha@outlook.fr",
+  "last_name": "Toto", 
+  "adress" : "123 Main St"
+}
+
+###
+### Update an existing owner
+PUT http://localhost:3000/api/owners/0cf7ad7f-f178-485f-a964-fb4f65e48fa5
+Content-Type: application/json
+
+{
+  "first_name": "MODIFF TATA",
+  "phone": "1234567890",
+  "email": "haha@outlook.fr",
+  "last_name": "Toto", 
+  "adress" : "123 Main St"
+}
+
+###
+### Delete an owner
+DELETE http://localhost:3000/api/owners/f565ba43-0161-46c7-bb18-bf49e8ad2496
+Content-Type: application/json
+
+###
