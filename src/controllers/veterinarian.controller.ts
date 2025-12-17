@@ -1,9 +1,13 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { VeterinarianService } from "../services/veterinarian.service";
 
 const service = new VeterinarianService();
 
-export const getAllVeterinarians = async (_req: Request, res: Response) => {
+export const getAllVeterinarians = async (
+  _req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const veterinarians = await service.getAll();
     return res.status(200).json({
@@ -12,14 +16,15 @@ export const getAllVeterinarians = async (_req: Request, res: Response) => {
       data: veterinarians,
     });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Error fetching veterinarians",
-    });
+    next(error);
   }
 };
 
-export const getVeterinarianById = async (req: Request, res: Response) => {
+export const getVeterinarianById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const veterinarian = await service.getByIdVeterinarian(req.params.id);
 
@@ -29,16 +34,17 @@ export const getVeterinarianById = async (req: Request, res: Response) => {
       data: veterinarian,
     });
   } catch (error) {
-    return res.status(404).json({
-      success: false,
-      message: "Veterinarian not found",
-    });
+    next(error);
   }
 };
 
-export const createVeterinarian = async (req: Request, res: Response) => {
+export const createVeterinarian = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const body = (req.body ?? {}) as any;
+    const body = req.body ?? {};
     const { last_name, first_name, phone, email, adress } = body;
 
     if (!last_name) {
@@ -64,15 +70,15 @@ export const createVeterinarian = async (req: Request, res: Response) => {
       data: veterinarian,
     });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      success: false,
-      message: "Error creating veterinarian",
-    });
+    next(error);
   }
 };
 
-export const updateVeterinarian = async (req: Request, res: Response) => {
+export const updateVeterinarian = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const veterinarian = await service.updateVeterinarian(
       req.params.id,
@@ -85,14 +91,15 @@ export const updateVeterinarian = async (req: Request, res: Response) => {
       data: veterinarian,
     });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Error updating veterinarian",
-    });
+    next(error);
   }
 };
 
-export const deleteVeterinarian = async (req: Request, res: Response) => {
+export const deleteVeterinarian = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     await service.deleteVeterinarian(req.params.id);
 
@@ -101,9 +108,6 @@ export const deleteVeterinarian = async (req: Request, res: Response) => {
       message: "Veterinarian successfully deleted",
     });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Error deleting veterinarian",
-    });
+    next(error);
   }
 };

@@ -1,0 +1,44 @@
+### GET all treatments
+GET http://localhost:3000/api/treatments
+Accept: application/json
+
+###
+
+### GET a specific treatment by ID
+GET http://localhost:3000/api/treatments/0a7897ff-44c7-4e6b-b51c-21736c30b51e
+Accept: application/json
+
+###
+
+### Create a new treatment
+POST http://localhost:3000/api/treatments
+Content-Type: application/json
+
+{
+  "id_animal": "9bb49d3b-a1bb-4147-a2dd-2abd6ce77d44",
+  "name_treatment": "Loperamide",
+  "dosage": "1 comprimé matin et soir",
+  "start_date": "2025-12-17T00:00:00.000Z",
+  "end_date": "2025-12-24T00:00:00.000Z",
+  "comment": "Après repas"
+}
+
+###
+
+### Update an existing treatment
+PUT http://localhost:3000/api/treatments/0a7897ff-44c7-4e6b-b51c-21736c30b51e
+Content-Type: application/json
+
+{
+  "name_treatment": "Antibiotique (modif)",
+  "dosage": "1 comprimé le soir"
+}
+
+###
+
+### Delete a treatment
+DELETE http://localhost:3000/api/treatments/0a7897ff-44c7-4e6b-b51c-21736c30b51e
+
+###
+
+

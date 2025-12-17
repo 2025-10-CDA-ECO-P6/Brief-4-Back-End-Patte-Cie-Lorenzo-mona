@@ -4,6 +4,7 @@ import cors from "cors";
 import ownerRoutes from "./routes/owner.routes";
 import veterinarianRoutes from "./routes/veterinarian.routes";
 import { errorMiddleware } from "./middlewares/errors.middlewares";
+import treatmentRoutes from "./routes/treatment.routes";
 
 export const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 
 app.use("/api/owners", ownerRoutes);
 app.use("/api/veterinarians", veterinarianRoutes);
+app.use("/api/treatments", treatmentRoutes);
 
 app.use(errorMiddleware);
 

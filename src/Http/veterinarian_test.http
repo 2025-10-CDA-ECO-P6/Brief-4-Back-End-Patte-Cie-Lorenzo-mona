@@ -1,0 +1,40 @@
+### GET all veterinarians
+GET http://localhost:3000/api/veterinarians
+Accept: application/json
+
+###
+
+### GET a specific veterinarian by ID
+GET http://localhost:3000/api/veterinarians/1f045689-a58e-4933-b085-a256b782b24a
+
+###
+
+### Create a new veterinarian
+POST http://localhost:3000/api/veterinarians
+Content-Type: application/json
+
+{
+  "last_name": "Dupont",
+  "first_name": "Jean",
+  "phone": "0612345678",
+  "email": "jean.dupont@clinic.fr",
+  "adress": "10 rue de la Clinique"
+}
+
+###
+
+### Update an existing veterinarian
+PUT http://localhost:3000/api/veterinarians/1f045689-a58e-4933-b085-a256b782b24a
+Content-Type: application/json
+
+{
+  "first_name": "Jean (modif)",
+  "phone": "0699999999"
+}
+
+###
+
+### Delete a veterinarian
+DELETE http://localhost:3000/api/veterinarians/1f045689-a58e-4933-b085-a256b782b24a
+
+###

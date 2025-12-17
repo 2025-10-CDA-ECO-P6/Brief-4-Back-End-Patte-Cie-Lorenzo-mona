@@ -13,7 +13,7 @@ model animal {
   id_owner     String         @db.Uuid
   name         String         @db.VarChar(50)
   breed        String         @db.VarChar(50)
-  chip_number  String         @unique @db.VarChar(50)
+  chip_number  String?        @unique @db.VarChar(50)
   birth_date   DateTime       @db.Date
   weight       Decimal        @db.Decimal(5, 2)
   size         Decimal        @db.Decimal(5, 2)
@@ -25,51 +25,72 @@ model animal {
 }
 
 model consultation {
-  id_consultation String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  id_animal       String    @db.Uuid
-  id_veterinarian String    @db.Uuid
-  date_visite     DateTime  @db.Date
+  id_consultation String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_animal       String       @db.Uuid
+  id_veterinarian String       @db.Uuid
+  date_visite     DateTime     @db.Date
   reason          String
   diagnosis       String
-  animal          animal    @relation(fields: [id_animal], references: [id_animal], onDelete: Cascade, onUpdate: NoAction, map: "fk_consultation_animal")
+  animal          animal       @relation(fields: [id_animal], references: [id_animal], onDelete: Cascade, onUpdate: NoAction, map: "fk_consultation_animal")
+  veterinarian    veterinarian @relation(fields: [id_veterinarian], references: [id_veterinarian], onDelete: Cascade, onUpdate: NoAction, map: "fk_consultation_veterinarian")
 }
 
 model owner {
   id_owner   String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_user    String   @unique @db.Uuid
   last_name  String   @db.VarChar(30)
   first_name String   @db.VarChar(30)
   phone      String   @db.VarChar(20)
   email      String   @db.VarChar(150)
   adress     String
   animal     animal[]
+  user       user     @relation(fields: [id_user], references: [id_user], onDelete: Cascade, onUpdate: NoAction, map: "fk_owner_user")
 }
 
 model treatment {
-  id_treatment   String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  id_animal      String    @db.Uuid
-  name_treatment String    @db.VarChar(30)
-  dosage         String 
-  start_date     DateTime  @db.Date
-  end_date       DateTime  @db.Date
+  id_treatment   String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_animal      String   @db.Uuid
+  name_treatment String   @db.VarChar(30)
+  dosage         String
+  start_date     DateTime @db.Date
+  end_date       DateTime @db.Date
   comment        String?
-  animal         animal    @relation(fields: [id_animal], references: [id_animal], onDelete: Cascade, onUpdate: NoAction, map: "fk_treatment_animal")
+  animal         animal   @relation(fields: [id_animal], references: [id_animal], onDelete: Cascade, onUpdate: NoAction, map: "fk_treatment_animal")
 }
 
 model vaccination {
-  id_vaccination String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  id_animal      String    @db.Uuid
-  vaccine_name   String    @db.VarChar(30)
-  vaccine_date   DateTime  @db.Date
-  reminder_date  DateTime  @db.Date
+  id_vaccination String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_animal      String   @db.Uuid
+  vaccine_name   String   @db.VarChar(30)
+  vaccine_date   DateTime @db.Date
+  reminder_date  DateTime @db.Date
   comment        String?
-  animal         animal    @relation(fields: [id_animal], references: [id_animal], onDelete: Cascade, onUpdate: NoAction, map: "fk_vaccination_animal")
+  animal         animal   @relation(fields: [id_animal], references: [id_animal], onDelete: Cascade, onUpdate: NoAction, map: "fk_vaccination_animal")
 }
 
 model veterinarian {
-  id_veterinarian String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  last_name       String  @db.VarChar(30)
-  first_name      String  @db.VarChar(30)
-  phone           String  @db.VarChar(20)
-  email           String  @db.VarChar(150)
-  adress          String 
+  id_veterinarian String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_user         String         @unique @db.Uuid
+  last_name       String         @db.VarChar(30)
+  first_name      String         @db.VarChar(30)
+  phone           String         @db.VarChar(20)
+  email           String         @db.VarChar(150)
+  adress          String
+  consultation    consultation[]
+  user            user           @relation(fields: [id_user], references: [id_user], onDelete: Cascade, onUpdate: NoAction, map: "fk_veterinarian_user")
+}
+
+model user {
+  id_user      String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  password     String        @db.VarChar(255)
+  email        String        @unique @db.VarChar(150)
+  user_role    user_role     @default(owner)
+  owner        owner?
+  veterinarian veterinarian?
+}
+
+enum user_role {
+  owner
+  veterinarian
+  admin
 }

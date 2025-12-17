@@ -2,7 +2,6 @@ import "dotenv/config";
 import { app } from "./app";
 import express from "express";
 import cors from "cors";
-import veterinarianRoutes from "./routes/veterinarian.routes";
 
 app.use(cors());
 app.use(express.json());
