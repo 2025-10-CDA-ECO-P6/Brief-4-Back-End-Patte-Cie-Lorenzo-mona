@@ -24,13 +24,13 @@ Content-Type: application/json
   "first_name": "Tata",
   "phone": "1234567890",
   "email": "haha@outlook.fr",
-  "last_name": "Toto", 
-  "adress" : "123 Main St"
+  "last_name": "Toto",
+  "adress": "157 rue gauagz"
 }
 
 ###
 ### Update an existing owner
-PUT http://localhost:3000/api/owners/0cf7ad7f-f178-485f-a964-fb4f65e48fa5
+PUT http://localhost:3000/api/owners/2595b44a-87d3-40fe-8a2b-bb21c6ba5157
 Content-Type: application/json
 
 {
@@ -43,7 +43,11 @@ Content-Type: application/json
 
 ###
 ### Delete an owner
-DELETE http://localhost:3000/api/owners/f565ba43-0161-46c7-bb18-bf49e8ad2496
+DELETE http://localhost:3000/api/owners/dda27015-8a8f-4a6f-bb42-ee93edd8494
 Content-Type: application/json
 
 ###
+
+### TEST middleware 
+GET http://localhost:3000/api/owners/_test/crash
+Accept: application/json
