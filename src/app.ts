@@ -10,4 +10,4 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/owners", ownerRoutes);
-app.use("/veterinarians", veterinarianRoutes);
+app.use("/api/veterinarians", veterinarianRoutes);
