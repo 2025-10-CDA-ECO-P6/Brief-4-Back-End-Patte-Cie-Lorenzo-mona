@@ -20,7 +20,9 @@ Ce projet fournit une API REST basée sur **Node.js**, **Express** et **PostgreS
 ## Architecture du projet 
 
 ## Swagger
-
+```bash
+http://localhost:3000/api-docs/
+```
 
 ## Lancer le projet en local
 ```bash
