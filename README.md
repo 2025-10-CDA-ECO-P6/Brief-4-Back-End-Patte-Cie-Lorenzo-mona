@@ -4,9 +4,9 @@ Backend de l’application **Patte & Cie** (carnet de santé animal).
 Ce projet fournit une API REST basée sur **Node.js**, **Express** et **PostgreSQL (Neon)**.
 ---
 ## MCD - MLD - MPD 
-![MCD](docs/mcd.png)
-![MLD](docs/mld.png)
-![MPD](docs/mpd.png)
+![MCD](database/mcd.png)
+![MLD](database/mld.png)
+![MPD](database/mpd.png)
 
 ## Techno
 - **Node.js** : environnement d’exécution JavaScript  
@@ -20,7 +20,9 @@ Ce projet fournit une API REST basée sur **Node.js**, **Express** et **PostgreS
 ## Architecture du projet 
 
 ## Swagger
-
+```bash
+http://localhost:3000/api-docs/
+```
 
 ## Lancer le projet en local
 ```bash
