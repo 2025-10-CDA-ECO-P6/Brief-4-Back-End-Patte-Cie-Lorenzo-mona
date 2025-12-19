@@ -1,0 +1,40 @@
+### GET all consultation
+GET http://localhost:3000/api/consultations
+Accept: application/json
+
+
+### GET a specific consultation by ID
+GET http://localhost:3000/api/consultations/53df1bcb-b213-4353-be81-ecdf0ac9d0ef
+
+### Create a new consultation
+POST http://localhost:3000/api/consultations
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id_animal": "3f4b47bd-739a-4c56-b8c8-2614e9080cf4",
+  "id_veterinarian": "599d2980-16ff-49dd-8a27-c32b596658f6",
+  "date_visite": "2025-12-17T00:00:00.000Z",
+  "reason": "Boiterie depuis 2 jours",
+  "diagnosis": "Entorse légère"
+}
+
+###
+
+### Update an existing veterinarian
+PUT http://localhost:3000/api/consultations/53df1bcb-b213-4353-be81-ecdf0ac9d0ef
+Content-Type: application/json
+
+{
+  "id_animal": "3f4b47bd-739a-4c56-b8c8-2614e9080cf4",
+  "id_veterinarian": "599d2980-16ff-49dd-8a27-c32b596658f6",
+  "date_visite": "2025-12-17T00:00:00.000Z",
+  "reason": "Boiteriefefef depuis 2 jours",
+  "diagnosis": "Entorse légère"
+}
+
+###
+
+### Delete a veterinarian
+DELETE http://localhost:3000/api/consultations/53df1bcb-b213-4353-be81-ecdf0ac9d0ef
+###
