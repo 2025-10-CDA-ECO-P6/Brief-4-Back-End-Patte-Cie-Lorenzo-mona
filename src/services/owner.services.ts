@@ -23,41 +23,80 @@ export async function getOwnerById(id: string) {
 }
 
 export async function createOwner(data: {
+  id_user?: string;
   first_name?: string;
   last_name?: string;
   phone?: string;
   email?: string;
   adress?: string;
 }) {
-  // Verification metier
+  // 1. Validation basique
   if (
-    !data.first_name?.trim() ||
-    !data.last_name?.trim() ||
-    !data.phone?.trim() ||
-    !data.email?.trim() ||
-    !data.adress?.trim()
+    !data.id_user ||
+    !data.first_name ||
+    !data.last_name ||
+    !data.phone ||
+    !data.email ||
+    !data.adress
   ) {
     throw {
-      // Gestion erreur metier
       status: 400,
       message: "All fields are required",
-      details: {
-        required: ["first_name", "last_name", "phone", "email", "adress"],
-      },
     };
   }
 
-  // Creation owner si tout est rempli
+  const id_user = data.id_user.trim();
+  const first_name = data.first_name.trim();
+  const last_name = data.last_name.trim();
+  const phone = data.phone.trim();
+  const email = data.email.trim();
+  const adress = data.adress.trim();
+
+  // 2. Vérifier que le user existe
+  const user = await prisma.user.findUnique({
+    where: { id_user },
+  });
+
+  if (!user) {
+    throw {
+      status: 404,
+      message: "User not found",
+    };
+  }
+
+  // 3. Vérifier le rôle
+  if (user.user_role !== "owner") {
+    throw {
+      status: 400,
+      message: "User is not an owner",
+    };
+  }
+
+  // 4. Vérifier qu’il n’a pas déjà un owner
+  const existingOwner = await prisma.owner.findUnique({
+    where: { id_user },
+  });
+
+  if (existingOwner) {
+    throw {
+      status: 409,
+      message: "User already linked to an owner",
+    };
+  }
+
+  // 5. Création
   return prisma.owner.create({
     data: {
-      first_name: data.first_name.trim(),
-      last_name: data.last_name.trim(),
-      phone: data.phone.trim(),
-      email: data.email.trim(),
-      adress: data.adress.trim(),
+      id_user,
+      first_name,
+      last_name,
+      phone,
+      email,
+      adress,
     },
   });
 }
+
 
 export async function updateOwner(
   id: string,

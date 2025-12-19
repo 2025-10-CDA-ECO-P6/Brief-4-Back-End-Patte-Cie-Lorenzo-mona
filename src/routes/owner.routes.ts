@@ -12,28 +12,7 @@ router.get("/", getOwnersController);
 
 router.get("/:id", getOwnerByIdController);
 
-router.post(
-  "/",
-  /* #swagger.requestBody = {
-        required: true,
-        content: {
-          "application/json": {
-            schema: {
-              type: "object",
-              required: ["first_name", "last_name", "phone", "email", "adress"],
-              properties: {
-                first_name: { type: "string" },
-                last_name: { type: "string" },
-                phone: { type: "string" },
-                email: { type: "string" },
-                adress: { type: "string" }
-              }
-            }
-          }
-        }
-  } */
-  createOwnerController
-);
+router.post("/", createOwnerController);
 
 router.put("/:id", updateOwnerController);
 
