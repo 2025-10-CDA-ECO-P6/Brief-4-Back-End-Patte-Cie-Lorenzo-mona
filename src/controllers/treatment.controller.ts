@@ -76,16 +76,12 @@ export const createTreatment = async (
     }
 
     const treatment = await service.createTreatment({
-      name_treatment,
+      id_animal,
       dosage,
+      name_treatment,
       start_date,
       end_date,
       comment,
-      animal: {
-        connect: {
-          id_animal: id_animal,
-        },
-      },
     });
 
     return res.status(201).json({

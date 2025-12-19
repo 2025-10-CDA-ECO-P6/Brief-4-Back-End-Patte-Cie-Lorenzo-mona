@@ -49,19 +49,19 @@ INSERT INTO veterinarian (id_user, last_name, first_name, phone, email, adress) 
 INSERT INTO animal (id_owner, name, breed, chip_number, birth_date, weight, size, photo) VALUES
 (
   (SELECT id_owner FROM owner WHERE last_name = 'Dupont'),
-  'Rex', 'Labrador', 'CHIP001', '2019-05-15', 32.50, 60.00, 'rex.jpg'
+  'Rex', 'Labrador', 'CHIP001', '2019-05-15T00:00:00.000Z', 32.50, 60.00, 'rex.jpg'
 ),
 (
   (SELECT id_owner FROM owner WHERE last_name = 'Martin'),
-  'Minou', 'Persan', 'CHIP002', '2020-08-22', 4.50, 25.00, 'minou.jpg'
+  'Minou', 'Persan', 'CHIP002', '2020-08-22T00:00:00.000Z', 4.50, 25.00, 'minou.jpg'
 ),
 (
   (SELECT id_owner FROM owner WHERE last_name = 'Bernard'),
-  'Bella', 'Golden Retriever', 'CHIP003', '2021-03-10', 28.00, 58.00, 'bella.jpg'
+  'Bella', 'Golden Retriever', 'CHIP003', '2021-03-10T00:00:00.000Z', 28.00, 58.00, 'bella.jpg'
 ),
 (
   (SELECT id_owner FROM owner WHERE last_name = 'Thomas'),
-  'Whiskers', 'Siamois', 'CHIP004', '2022-01-30', 3.80, 22.00, 'whiskers.jpg'
+  'Whiskers', 'Siamois', 'CHIP004', '2022-01-30T00:00:00.000Z', 3.80, 22.00, 'whiskers.jpg'
 );
 
 -- =========================
@@ -70,11 +70,11 @@ INSERT INTO animal (id_owner, name, breed, chip_number, birth_date, weight, size
 INSERT INTO treatment (id_animal, name_treatment, dosage, start_date, end_date, comment) VALUES
 (
   (SELECT id_animal FROM animal WHERE name = 'Rex'),
-  'Antibiotiques', '250mg 2x par jour', '2024-01-10', '2024-01-20', 'Infection cutanée'
+  'Antibiotiques', '250mg 2x par jour', '2024-01-10T00:00:00.000Z', '2024-01-20T00:00:00.000Z', 'Infection cutanée'
 ),
 (
   (SELECT id_animal FROM animal WHERE name = 'Minou'),
-  'Anti-douleur', '1 comprimé par jour', '2024-01-15', '2024-01-25', 'Arthrite légère'
+  'Anti-douleur', '1 comprimé par jour', '2024-01-15T00:00:00.000Z', '2024-01-25T00:00:00.000Z', 'Arthrite légère'
 );
 
 -- =========================
@@ -83,15 +83,15 @@ INSERT INTO treatment (id_animal, name_treatment, dosage, start_date, end_date, 
 INSERT INTO vaccination (id_animal, vaccine_name, vaccine_date, reminder_date, comment) VALUES
 (
   (SELECT id_animal FROM animal WHERE name = 'Rex'),
-  'Rage', '2023-06-15', '2024-06-15', 'Vaccination annuelle'
+  'Rage', '2023-06-15T00:00:00.000Z', '2024-06-15T00:00:00.000Z', 'Vaccination annuelle'
 ),
 (
   (SELECT id_animal FROM animal WHERE name = 'Bella'),
-  'DHPP', '2023-09-20', '2024-09-20', 'Vaccin complet'
+  'DHPP', '2023-09-20T00:00:00.000Z', '2024-09-20T00:00:00.000Z', 'Vaccin complet'
 ),
 (
   (SELECT id_animal FROM animal WHERE name = 'Minou'),
-  'Calicivirus', '2023-08-10', '2024-08-10', 'À jour'
+  'Calicivirus', '2023-08-10T00:00:00.000Z', '2024-08-10T00:00:00.000Z', 'À jour'
 );
 
 -- =========================
@@ -101,15 +101,15 @@ INSERT INTO consultation (id_animal, id_veterinarian, date_visite, reason, diagn
 (
   (SELECT id_animal FROM animal WHERE name = 'Rex'),
   (SELECT id_veterinarian FROM veterinarian WHERE last_name = 'Moreau'),
-  '2024-01-10', 'Démangeaisons', 'Dermatite allergique'
+  '2024-01-10T00:00:00.000Z', 'Démangeaisons', 'Dermatite allergique'
 ),
 (
   (SELECT id_animal FROM animal WHERE name = 'Minou'),
   (SELECT id_veterinarian FROM veterinarian WHERE last_name = 'Lefevre'),
-  '2024-01-12', 'Boiterie arrière', 'Arthrite'
+  '2024-01-12T00:00:00.000Z', 'Boiterie arrière', 'Arthrite'
 ),
 (
   (SELECT id_animal FROM animal WHERE name = 'Bella'),
   (SELECT id_veterinarian FROM veterinarian WHERE last_name = 'Moreau'),
-  '2024-01-08', 'Visite de routine', 'Bon état général'
+  '2024-01-08T00:00:00.000Z', 'Visite de routine', 'Bon état général'
 );

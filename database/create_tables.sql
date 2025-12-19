@@ -1,11 +1,7 @@
--- =========================
--- EXTENSIONS
--- =========================
+
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
--- =========================
--- ENUM : USER ROLE
--- =========================
+
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'user_role') THEN
@@ -13,9 +9,7 @@ BEGIN
   END IF;
 END $$;
 
--- =========================
--- USER
--- =========================
+
 CREATE TABLE IF NOT EXISTS "user" (
   id_user   UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   password  VARCHAR(255) NOT NULL,
@@ -23,9 +17,7 @@ CREATE TABLE IF NOT EXISTS "user" (
   user_role user_role NOT NULL DEFAULT 'owner'
 );
 
--- =========================
--- OWNER (1 USER = 1 OWNER)
--- =========================
+
 CREATE TABLE IF NOT EXISTS owner (
   id_owner   UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   id_user    UUID NOT NULL UNIQUE,
@@ -41,9 +33,7 @@ CREATE TABLE IF NOT EXISTS owner (
     ON DELETE CASCADE
 );
 
--- =========================
--- VETERINARIAN (1 USER = 1 VETERINARIAN)
--- =========================
+
 CREATE TABLE IF NOT EXISTS veterinarian (
   id_veterinarian UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   id_user         UUID NOT NULL UNIQUE,
@@ -59,9 +49,6 @@ CREATE TABLE IF NOT EXISTS veterinarian (
     ON DELETE CASCADE
 );
 
--- =========================
--- ANIMAL
--- =========================
 CREATE TABLE IF NOT EXISTS animal (
   id_animal    UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   id_owner     UUID NOT NULL,
@@ -79,9 +66,7 @@ CREATE TABLE IF NOT EXISTS animal (
     ON DELETE CASCADE
 );
 
--- =========================
--- TREATMENT
--- =========================
+
 CREATE TABLE IF NOT EXISTS treatment (
   id_treatment   UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   id_animal      UUID NOT NULL,
@@ -97,9 +82,7 @@ CREATE TABLE IF NOT EXISTS treatment (
     ON DELETE CASCADE
 );
 
--- =========================
--- VACCINATION
--- =========================
+
 CREATE TABLE IF NOT EXISTS vaccination (
   id_vaccination UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   id_animal      UUID NOT NULL,
@@ -114,9 +97,7 @@ CREATE TABLE IF NOT EXISTS vaccination (
     ON DELETE CASCADE
 );
 
--- =========================
--- CONSULTATION
--- =========================
+
 CREATE TABLE IF NOT EXISTS consultation (
   id_consultation  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   id_animal        UUID NOT NULL,

@@ -1,0 +1,38 @@
+### GET all vaccinations
+GET http://localhost:3000/api/vaccinations
+Accept: application/json
+
+###
+
+### GET a specific vaccination by ID
+GET http://localhost:3000/api/vaccinations/20b43caf-ecd9-49c1-a5ab-13e1a2334bd2
+
+### Create a new vaccination
+POST http://localhost:3000/api/vaccinations
+Content-Type: application/json
+
+
+{
+  "id_animal": "3f4b47bd-739a-4c56-b8c8-2614e9080cf4",
+  "vaccine_name": "Rage",
+  "vaccine_date": "2025-12-17T00:00:00.000Z",
+  "reminder_date": "2025-12-17T00:00:00.000Z",
+  "comment": "Rappel annuel"
+}
+
+###
+
+### Update an existing vaccination
+PUT http://localhost:3000/api/vaccinations/20b43caf-ecd9-49c1-a5ab-13e1a2334bd2
+Content-Type: application/json
+Accept: application/json
+
+{
+  "comment": "Rappel confirmé",
+  "reminder_date": "2025-12-17T00:00:00.000Z"
+}
+
+###
+
+### Delete a vaccination
+DELETE http://localhost:3000/api/vaccinations/ea82c4c1-5b7f-4781-8d8b-0b1912c21f6d

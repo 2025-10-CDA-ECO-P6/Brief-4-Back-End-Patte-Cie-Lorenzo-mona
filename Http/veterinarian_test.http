@@ -5,15 +5,14 @@ Accept: application/json
 ###
 
 ### GET a specific veterinarian by ID
-GET http://localhost:3000/api/veterinarians/1f045689-a58e-4933-b085-a256b782b24a
-
-###
-
+GET http://localhost:3000/api/veterinarians/9c720225-41ee-4916-a888-9e9d2d1989e2
 ### Create a new veterinarian
 POST http://localhost:3000/api/veterinarians
 Content-Type: application/json
+Accept: application/json
 
 {
+  "id_user": "73ac718c-b733-4751-b41d-6da59c387d44",
   "last_name": "Dupont",
   "first_name": "Jean",
   "phone": "0612345678",
@@ -24,17 +23,16 @@ Content-Type: application/json
 ###
 
 ### Update an existing veterinarian
-PUT http://localhost:3000/api/veterinarians/1f045689-a58e-4933-b085-a256b782b24a
+PUT http://localhost:3000/api/veterinarians/b4ae6fda-9a11-494d-ba3f-15bbcf90d6ea
 Content-Type: application/json
 
 {
-  "first_name": "Jean (modif)",
+  "first_name": "Jean-Marc",
   "phone": "0699999999"
 }
 
 ###
 
 ### Delete a veterinarian
-DELETE http://localhost:3000/api/veterinarians/1f045689-a58e-4933-b085-a256b782b24a
-
+DELETE http://localhost:3000/api/veterinarians/ae81426c-2115-4356-b300-3d84811202bc
 ###

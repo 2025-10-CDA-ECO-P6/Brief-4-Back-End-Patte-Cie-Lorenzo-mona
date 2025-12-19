@@ -23,6 +23,7 @@ export class VeterinarianService {
   }
 
   async createVeterinarian(data: {
+    id_user: string;
     last_name: string;
     first_name: string;
     phone: string;
@@ -30,6 +31,7 @@ export class VeterinarianService {
     adress: string;
   }) {
     if (
+      !data.id_user ||
       !data.last_name ||
       !data.first_name ||
       !data.phone ||
@@ -40,14 +42,43 @@ export class VeterinarianService {
         status: 400,
         message: "All fields are required",
         details: {
-          required: ["last_name", "first_name", "phone", "email", "adress"],
+          required: [
+            "id_user",
+            "last_name",
+            "first_name",
+            "phone",
+            "email",
+            "adress",
+          ],
         },
       };
     }
 
-    return prisma.veterinarian.create({
-      data,
-    });
+    try {
+      return await prisma.veterinarian.create({
+        data: {
+          id_user: data.id_user,
+          last_name: data.last_name,
+          first_name: data.first_name,
+          phone: data.phone,
+          email: data.email,
+          adress: data.adress,
+        } as any,
+      });
+    } catch (error: any) {
+      if (error?.code === "P2002") {
+        throw {
+          status: 409,
+          message: "Ce compte utilisateur est déjà associé à un vétérinaire",
+          details: {
+            field: "id_user",
+            value: data.id_user,
+          },
+        };
+      }
+
+      throw error;
+    }
   }
 
   async updateVeterinarian(id: string, data: any) {

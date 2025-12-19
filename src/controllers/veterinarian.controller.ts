@@ -45,7 +45,7 @@ export const createVeterinarian = async (
 ) => {
   try {
     const body = req.body ?? {};
-    const { last_name, first_name, phone, email, adress } = body;
+    const { id_user, last_name, first_name, phone, email, adress } = body;
 
     if (!last_name) {
       return res.status(400).json({
@@ -57,6 +57,7 @@ export const createVeterinarian = async (
     }
 
     const veterinarian = await service.createVeterinarian({
+      id_user,
       last_name,
       first_name,
       phone,

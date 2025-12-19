@@ -22,7 +22,14 @@ export class TreatmentService {
     return treatment;
   }
 
-  async createTreatment(data: any) {
+  async createTreatment(data: {
+    id_animal: string;
+    dosage: string;
+    name_treatment: string;
+    start_date: Date;
+    end_date?: Date;
+    comment?: string;
+  }) {
     if (!data) {
       throw {
         status: 400,
@@ -31,7 +38,7 @@ export class TreatmentService {
     }
 
     return prisma.treatment.create({
-      data,
+      data: data as any,
     });
   }
 
