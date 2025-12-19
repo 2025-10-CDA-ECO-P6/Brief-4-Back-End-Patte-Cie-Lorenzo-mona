@@ -1,5 +1,11 @@
 import { Router, Request, Response } from "express";
-import { getOwnersController , getOwnerByIdController, createOwnerController, updateOwnerController, deleteOwnerController } from "../controllers/owner.controller";
+import {
+  getOwnersController,
+  getOwnerByIdController,
+  createOwnerController,
+  updateOwnerController,
+  deleteOwnerController,
+} from "../controllers/owner.controller";
 const router = Router();
 
 router.get("/", getOwnersController);
@@ -29,7 +35,7 @@ router.post(
   createOwnerController
 );
 
-router.put("/:id", updateOwnerController );
+router.put("/:id", updateOwnerController);
 
 router.delete("/:id", deleteOwnerController);
 

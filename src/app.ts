@@ -9,6 +9,7 @@ import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "../swagger-output.json";
 import vaccinationRoutes from "./routes/vaccination.routes";
 import consultationRoutes from "./routes/consultation.routes";
+import animalRoutes from "./routes/animal.routes";
 export const app = express();
 
 app.use(cors());
@@ -19,6 +20,7 @@ app.use("/api/veterinarians", veterinarianRoutes);
 app.use("/api/treatments", treatmentRoutes);
 app.use("/api/vaccinations", vaccinationRoutes);
 app.use("/api/consultations", consultationRoutes);
+app.use("/api/animals", animalRoutes);
 
 app.use(errorMiddleware);
 
