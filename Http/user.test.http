@@ -1,0 +1,46 @@
+@admin_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoiZjA3MTE2YmYtYjQ0Zi00MmI5LTllYjktMzljNTc2NTNkMzUzIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzY2MTQwOTA1LCJleHAiOjE3NjYxNDQ1MDV9.0GVohG1gdgyojF9b4LJ2yOqyuHc_OmioyBcXI_O6UEc
+### GET all users
+GET http://localhost:3000/api/users
+Authorization: Bearer {{admin_token}}
+Accept: application/json
+###
+
+### GET a specific user by ID
+GET http://localhost:3000/api/users/19aaf6ba-9b18-4a6e-bce8-b31ec282d8a4
+Accept: application/json
+
+###
+
+### Create a new user
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+  "first_name": "Tata",
+  "phone": "1234567890",
+  "email": "gygy@outlook.fr",
+  "password": "password123",
+  "last_name": "Toto",
+  "adress": "157 rue gauagz",
+  "user_role": "veterinarian"
+}
+
+###
+
+### Update an existing user
+PUT http://localhost:3000/api/users/ae0f62b5-c30a-40ed-8cc7-51f88e20e76
+Content-Type: application/json
+
+{
+  "first_name": "Tata",
+  "phone": "1234567890",
+  "email": "foufou@outlook.fr",
+  "password": "password123",
+  "last_name": "Toto",
+  "adress": "157 rue gauagz"
+}
+
+###
+### Delete an user
+DELETE http://localhost:3000/api/users/dda27015-8a8f-4a6f-bb42-ee93edd8494
+Content-Type: application/json

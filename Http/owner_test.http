@@ -11,7 +11,7 @@ Accept: application/json
 ###
 
 ### GET a specific owner by ID
-GET http://localhost:3000/api/owners/d80c86b7-a873-407d-a98b-af9c53ff9d69
+GET http://localhost:3000/api/owners/859eee7d-60cd-4a2c-b9aa-5257f38b9fc2
 Accept: application/json
 
 ###
@@ -19,8 +19,9 @@ Accept: application/json
 ### Create a new owner
 POST http://localhost:3000/api/owners
 Content-Type: application/json
-
+#  Id user à recuperer depuis table user une fois user créé
 {
+  "id_user": "f07116bf-b44f-42b9-9eb9-39c57653d353", 
   "first_name": "Tata",
   "phone": "1234567890",
   "email": "haha@outlook.fr",
@@ -30,7 +31,7 @@ Content-Type: application/json
 
 ###
 ### Update an existing owner
-PUT http://localhost:3000/api/owners/2595b44a-87d3-40fe-8a2b-bb21c6ba5157
+PUT http://localhost:3000/api/owners/ae0f62b5-c30a-40ed-8cc7-51f88e20e76
 Content-Type: application/json
 
 {
