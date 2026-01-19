@@ -183,7 +183,7 @@ L’API est déployée sur Render, ce qui permet de la rendre accessible publiqu
 
 ### URL de base - Déploiement Render (production)
 ```bash
-https://
+https://brief-4-back-end-patte-cie-lorenzo-mona.onrender.com/api-docs/
 ```
 
 ### Variables d’environnement (Render)

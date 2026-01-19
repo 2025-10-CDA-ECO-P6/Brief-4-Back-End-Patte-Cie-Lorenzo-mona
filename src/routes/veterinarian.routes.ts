@@ -6,13 +6,34 @@ import {
   updateVeterinarian,
   deleteVeterinarian,
 } from "../controllers/veterinarian.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
+import { roleMiddleware } from "../middlewares/role.middleware";
 
 const router = Router();
 
-router.get("/", getAllVeterinarians);
-router.get("/:id", getVeterinarianById);
-router.post("/", createVeterinarian);
-router.put("/:id", updateVeterinarian);
-router.delete("/:id", deleteVeterinarian);
+router.get("/", 
+  authMiddleware,
+  roleMiddleware(["admin", "veterinarian", "owner"]),
+  getAllVeterinarians);
+
+router.get("/:id", 
+  authMiddleware,
+  roleMiddleware(["admin", "veterinarian", "owner"]),
+  getVeterinarianById);
+
+router.post("/", 
+  authMiddleware,
+  roleMiddleware(["admin"]),
+  createVeterinarian);
+
+router.put("/:id", 
+  authMiddleware,
+  roleMiddleware(["admin", "veterinarian"]),
+  updateVeterinarian);
+
+router.delete("/:id", 
+  authMiddleware,
+  roleMiddleware(["admin"]),
+  deleteVeterinarian);
 
 export default router;

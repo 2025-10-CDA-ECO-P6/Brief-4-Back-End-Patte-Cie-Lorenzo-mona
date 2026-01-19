@@ -6,17 +6,35 @@ import {
   updateOwnerController,
   deleteOwnerController,
 } from "../controllers/owner.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
+import { roleMiddleware } from "../middlewares/role.middleware";
+
 const router = Router();
 
-router.get("/", getOwnersController);
+router.get("/", 
+  authMiddleware,
+  roleMiddleware(["admin", "veterinarian"]),
+  getOwnersController);
 
-router.get("/:id", getOwnerByIdController);
+router.get("/:id", 
+  authMiddleware,
+  roleMiddleware(["admin", "owner", "veterinarian"]),
+  getOwnerByIdController);
 
-router.post("/", createOwnerController);
+router.post("/", 
+  authMiddleware,
+  roleMiddleware(["admin", "veterinarian"]),
+  createOwnerController);
 
-router.put("/:id", updateOwnerController);
+router.put("/:id", 
+  authMiddleware,
+  roleMiddleware(["admin", "owner", "veterinarian"]),
+  updateOwnerController);
 
-router.delete("/:id", deleteOwnerController);
+router.delete("/:id", 
+  authMiddleware,
+  roleMiddleware(["admin","veterinarian"]),
+  deleteOwnerController);
 
 //  Test MIDDLEWARE ERROR
 // router.get("/_test/error", (req, res, next) => {

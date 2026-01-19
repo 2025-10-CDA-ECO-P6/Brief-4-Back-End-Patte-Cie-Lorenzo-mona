@@ -1,5 +1,8 @@
+@admin_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoiYWNjMGQ1NzEtOWFlNy00ZTEwLWIxMTUtMDBjM2FkMjI5MDI4Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzY4ODExMzU2LCJleHAiOjE3Njg4MTQ5NTZ9.ta5OHOgo9WoV1Hi8JZDL0QnPas2Z5RAHhTY0q8WDiLM
+
 ### GET all consultation
 GET http://localhost:3000/api/consultations
+Authorization: Bearer {{admin_token}}
 Accept: application/json
 
 

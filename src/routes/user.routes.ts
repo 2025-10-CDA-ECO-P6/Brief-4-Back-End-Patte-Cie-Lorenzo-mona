@@ -4,6 +4,7 @@ import {
   getUserByIdController,
   deleteUserController,
   getUsersController,
+  updateUserController
 } from "../controllers/user.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { roleMiddleware } from "../middlewares/role.middleware";
@@ -22,9 +23,21 @@ router.get(
 router.post("/", createUserController);
 
 // GET user by id
-router.get("/:id", getUserByIdController);
+router.get("/:id", 
+  authMiddleware,
+  roleMiddleware(["admin", "veterinarian"]),
+  getUserByIdController);
 
 // DELETE user
-router.delete("/:id", deleteUserController);
+router.delete("/:id", 
+  authMiddleware,
+  roleMiddleware(["admin"]),
+  deleteUserController);
+
+// UPDATE user
+router.put("/:id",
+  authMiddleware,
+  roleMiddleware(["admin"]),
+  updateUserController);
 
 export default router;

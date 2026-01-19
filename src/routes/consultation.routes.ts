@@ -6,13 +6,34 @@ import {
   updateConsultation,
   deleteConsultation,
 } from "../controllers/consultation.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
+import { roleMiddleware } from "../middlewares/role.middleware";
 
 const router = Router();
 
-router.get("/", getAllConsultations);
-router.get("/:id", getConsultationById);
-router.post("/", createConsultation);
-router.put("/:id", updateConsultation);
-router.delete("/:id", deleteConsultation);
+router.get("/", 
+  authMiddleware,
+  roleMiddleware(["admin", "veterinarian"]),
+  getAllConsultations);
+  
+router.get("/:id", 
+  authMiddleware,
+  roleMiddleware(["admin", "veterinarian", "owner"]),
+  getConsultationById);
+
+router.post("/", 
+  authMiddleware,
+  roleMiddleware(["admin", "veterinarian"]),
+  createConsultation);
+
+router.put("/:id", 
+  authMiddleware,
+  roleMiddleware(["admin", "veterinarian"]),
+  updateConsultation);
+
+router.delete("/:id", 
+  authMiddleware,
+  roleMiddleware(["admin", "veterinarian"]),
+  deleteConsultation);
 
 export default router;
