@@ -31,11 +31,17 @@ Ce projet fournit une API REST basée sur **Node.js**, **Express** et **PostgreS
 │   │   → Configuration principale d’Express
 │   │   → Enregistrement des routes et middlewares globaux
 │   │
+│   ├── cron.ts
+│   │   → Configuration de la tâche Cron
+│   │
 │   ├── routes/
 │   │   → Définition des endpoints de l’API
 │   │
 │   ├── controllers/
 │   │   → Gestion des requêtes HTTP et des réponses
+│   │
+│   ├── jobs/
+│   │   → Tâches planifiées - Cron jobs - pour rappel vaccination.
 │   │
 │   ├── services/
 │   │   → Logique métier et accès aux données
@@ -60,7 +66,7 @@ Ce projet fournit une API REST basée sur **Node.js**, **Express** et **PostgreS
 ├── swagger.js
 │   → Configuration de Swagger
 ├── swagger-output.json
-│   → Documentation Swagger générée
+│   → Documentation Swagger 
 │
 ├── package.json
 │   → Dépendances et scripts du projet
@@ -175,15 +181,28 @@ L’API utilise une gestion des erreurs centralisée
 - 404 : Ressource inexistante = app.ts
 - 500 : Erreur interne du serveur
 
+## Tache Cron 
+- Utilisation de node-cron
+- Un rappel prévu 7 jours avant le rappel de vaccination et un rappel la veille.
+
 ## Intégration Front-End  
 L’API est déployée sur Render, ce qui permet de la rendre accessible publiquement pour l’intégration Front.  
 - Hébergement : Render
 - Base de données : PostgreSQL (Neon)
 - L’API est exposée via une URL publique fournie par Render
 
+### Lien des repos GitHuB avec API Integration
+```bash
+https://github.com/2025-10-CDA-ECO-P6/pattesAndCie-Front-with-API
+```
+
+```bash
+https://github.com/2025-10-CDA-ECO-P6/Amandine-PatteCie--Front-with-API
+```
+
 ### URL de base - Déploiement Render (production)
 ```bash
-https://brief-4-back-end-patte-cie-lorenzo-mona.onrender.com/api-docs/
+https://brief-4-back-end-patte-cie-lorenzo-mona.onrender.com/api-docs/  
 ```
 
 ### Variables d’environnement (Render)

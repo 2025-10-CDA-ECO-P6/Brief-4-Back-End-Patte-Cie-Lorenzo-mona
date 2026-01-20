@@ -2,12 +2,17 @@ import { prisma } from "../repositories/prisma";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET || "dev_secret";
 
 export async function login(data: {
   email?: string;
   password?: string;
 }) {
+  const JWT_SECRET = process.env.JWT_SECRET;
+  
+  if (!JWT_SECRET) {
+    throw { status: 500, message: "JWT_SECRET is missing" };
+  }
+
   if (!data.email || !data.password) {
     throw { status: 400, message: "Email and password are required" };
   }
@@ -35,7 +40,7 @@ export async function login(data: {
       role: user.user_role,
     },
     JWT_SECRET,
-    { expiresIn: "1h" }
+    { expiresIn: "1000h" }
   );
 
   return {
