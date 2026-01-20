@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import {
   getOwnersController,
   getOwnerByIdController,
@@ -11,37 +11,49 @@ import { roleMiddleware } from "../middlewares/role.middleware";
 
 const router = Router();
 
-router.get("/", 
+router.get(
+  "/",
   authMiddleware,
   roleMiddleware(["admin", "veterinarian"]),
-  getOwnersController);
+  (req: Request, res: Response, next: NextFunction) => {
+    return getOwnersController(req, res, next);
+  },
+);
 
-router.get("/:id", 
+router.get(
+  "/:id",
   authMiddleware,
   roleMiddleware(["admin", "owner", "veterinarian"]),
-  getOwnerByIdController);
+  (req: Request, res: Response, next: NextFunction) => {
+    return getOwnerByIdController(req, res, next);
+  },
+);
 
-router.post("/", 
+router.post(
+  "/",
   authMiddleware,
   roleMiddleware(["admin", "veterinarian"]),
-  createOwnerController);
+  (req: Request, res: Response, next: NextFunction) => {
+    return createOwnerController(req, res, next);
+  },
+);
 
-router.put("/:id", 
+router.put(
+  "/:id",
   authMiddleware,
   roleMiddleware(["admin", "owner", "veterinarian"]),
-  updateOwnerController);
+  (req: Request, res: Response, next: NextFunction) => {
+    return updateOwnerController(req, res, next);
+  },
+);
 
-router.delete("/:id", 
+router.delete(
+  "/:id",
   authMiddleware,
-  roleMiddleware(["admin","veterinarian"]),
-  deleteOwnerController);
-
-//  Test MIDDLEWARE ERROR
-// router.get("/_test/error", (req, res, next) => {
-//   return next({ status: 418, message: "Test middleware" });
-// });
-
-// router.get("/_test/crash", (req, res) => {
-// });
+  roleMiddleware(["admin", "veterinarian"]),
+  (req: Request, res: Response, next: NextFunction) => {
+    return deleteOwnerController(req, res, next);
+  },
+);
 
 export default router;

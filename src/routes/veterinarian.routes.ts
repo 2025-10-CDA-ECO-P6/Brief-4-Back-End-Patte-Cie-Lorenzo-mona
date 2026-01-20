@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import {
   getAllVeterinarians,
   getVeterinarianById,
@@ -11,29 +11,49 @@ import { roleMiddleware } from "../middlewares/role.middleware";
 
 const router = Router();
 
-router.get("/", 
+router.get(
+  "/",
   authMiddleware,
   roleMiddleware(["admin", "veterinarian", "owner"]),
-  getAllVeterinarians);
+  (req: Request, res: Response, next: NextFunction) => {
+    return getAllVeterinarians(req, res, next);
+  },
+);
 
-router.get("/:id", 
+router.get(
+  "/:id",
   authMiddleware,
   roleMiddleware(["admin", "veterinarian", "owner"]),
-  getVeterinarianById);
+  (req: Request, res: Response, next: NextFunction) => {
+    return getVeterinarianById(req, res, next);
+  },
+);
 
-router.post("/", 
+router.post(
+  "/",
   authMiddleware,
   roleMiddleware(["admin"]),
-  createVeterinarian);
+  (req: Request, res: Response, next: NextFunction) => {
+    return createVeterinarian(req, res, next);
+  },
+);
 
-router.put("/:id", 
+router.put(
+  "/:id",
   authMiddleware,
   roleMiddleware(["admin", "veterinarian"]),
-  updateVeterinarian);
+  (req: Request, res: Response, next: NextFunction) => {
+    return updateVeterinarian(req, res, next);
+  },
+);
 
-router.delete("/:id", 
+router.delete(
+  "/:id",
   authMiddleware,
   roleMiddleware(["admin"]),
-  deleteVeterinarian);
+  (req: Request, res: Response, next: NextFunction) => {
+    return deleteVeterinarian(req, res, next);
+  },
+);
 
 export default router;

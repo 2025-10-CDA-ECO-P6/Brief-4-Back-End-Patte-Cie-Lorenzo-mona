@@ -7,12 +7,58 @@
   },
   "host": "localhost:3000",
   "basePath": "/",
-  "schemes": [
-    "http"
+  "tags": [
+    {
+      "name": "Information Utile",
+      "description": "Pour les token d'authentification, utilisez le format : 'Bearer {token}'"
+    },
+    {
+      "name": "Auth",
+      "description": "Authentification"
+    },
+    {
+      "name": "Users",
+      "description": "Utilisateurs"
+    },
+    {
+      "name": "Owners",
+      "description": "Propriétaires"
+    },
+    {
+      "name": "Veterinarians",
+      "description": "Vétérinaires"
+    },
+    {
+      "name": "Animals",
+      "description": "Animaux"
+    },
+    {
+      "name": "Treatments",
+      "description": "Traitements"
+    },
+    {
+      "name": "Vaccinations",
+      "description": "Vaccinations"
+    },
+    {
+      "name": "Consultations",
+      "description": "Consultations"
+    }
   ],
+  "schemes": ["http"],
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "JWT Bearer token. Exemple: 'Bearer {token}'"
+    }
+  },
   "paths": {
     "/api/owners/": {
       "get": {
+        "tags": ["Owners"],
+        "summary": "Récupérer tous les propriétaires",
         "description": "",
         "parameters": [
           {
@@ -23,38 +69,77 @@
           {
             "name": "page",
             "in": "query",
-            "type": "string"
+            "required": false,
+            "type": "integer"
           },
           {
             "name": "limit",
             "in": "query",
-            "type": "string"
+            "required": false,
+            "type": "integer"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Liste des propriétaires",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Owner"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "post": {
+        "tags": ["Owners"],
+        "summary": "Créer un propriétaire",
         "description": "",
         "parameters": [
           {
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Owner"
+            }
           }
         ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Créé",
+            "schema": {
+              "$ref": "#/definitions/Owner"
+            }
+          },
+          "400": {
+            "description": "Données invalides"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     },
     "/api/owners/{id}": {
       "get": {
+        "tags": ["Owners"],
+        "summary": "Récupérer un propriétaire par son ID",
         "description": "",
         "parameters": [
           {
@@ -71,11 +156,24 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Propriétaire",
+            "schema": {
+              "$ref": "#/definitions/Owner"
+            }
+          },
+          "404": {
+            "description": "Non trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "put": {
+        "tags": ["Owners"],
+        "summary": "Mettre à jour un propriétaire",
         "description": "",
         "parameters": [
           {
@@ -88,15 +186,36 @@
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Owner"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Mis à jour",
+            "schema": {
+              "$ref": "#/definitions/Owner"
+            }
+          },
+          "404": {
+            "description": "Non trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "delete": {
+        "tags": ["Owners"],
+        "summary": "Supprimer un propriétaire",
         "description": "",
         "parameters": [
           {
@@ -113,38 +232,94 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Supprimé"
+          },
+          "404": {
+            "description": "Non trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     },
     "/api/users/": {
       "get": {
+        "tags": ["Users"],
+        "summary": "Récupérer tous les utilisateurs",
         "description": "",
         "parameters": [
           {
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Liste des utilisateurs",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "post": {
+        "tags": ["Users"],
+        "summary": "Créer un utilisateur",
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Créé",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Données invalides"
           }
         }
       }
     },
     "/api/users/{id}": {
       "get": {
+        "tags": ["Users"],
+        "summary": "Récupérer un utilisateur par son ID",
         "description": "",
         "parameters": [
           {
@@ -161,32 +336,24 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Utilisateur",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "404": {
+            "description": "Non trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        }
-      },
-      "put": {
+        "tags": ["Users"],
+        "summary": "Supprimer un utilisateur",
         "description": "",
         "parameters": [
           {
@@ -203,13 +370,68 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Supprimé"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Non trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Users"],
+        "summary": "Mettre à jour un utilisateur",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mis à jour",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "404": {
+            "description": "Non trouvé"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     },
     "/api/veterinarians/": {
       "get": {
+        "tags": ["Veterinarians"],
+        "summary": "Récupérer tous les vétérinaires",
         "description": "",
         "parameters": [
           {
@@ -220,31 +442,65 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Liste des vétérinaires",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Veterinarian"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "post": {
+        "tags": ["Veterinarians"],
+        "summary": "Créer un vétérinaire",
         "description": "",
         "parameters": [
           {
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Veterinarian"
+            }
           }
         ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Créé",
+            "schema": {
+              "$ref": "#/definitions/Veterinarian"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Données invalides"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     },
     "/api/veterinarians/{id}": {
       "get": {
+        "tags": ["Veterinarians"],
+        "summary": "Récupérer un vétérinaire par son ID",
         "description": "",
         "parameters": [
           {
@@ -261,11 +517,24 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Vétérinaire",
+            "schema": {
+              "$ref": "#/definitions/Veterinarian"
+            }
+          },
+          "404": {
+            "description": "Non trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "put": {
+        "tags": ["Veterinarians"],
+        "summary": "Mettre à jour un vétérinaire",
         "description": "",
         "parameters": [
           {
@@ -278,15 +547,36 @@
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Veterinarian"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Mis à jour",
+            "schema": {
+              "$ref": "#/definitions/Veterinarian"
+            }
+          },
+          "404": {
+            "description": "Non trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "delete": {
+        "tags": ["Veterinarians"],
+        "summary": "Supprimer un vétérinaire",
         "description": "",
         "parameters": [
           {
@@ -303,13 +593,23 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Supprimé"
+          },
+          "404": {
+            "description": "Non trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     },
     "/api/treatments/": {
       "get": {
+        "tags": ["Treatments"],
+        "summary": "Récupérer tous les traitements",
         "description": "",
         "parameters": [
           {
@@ -320,13 +620,37 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Liste des traitements",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Treatment"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "post": {
+        "tags": ["Treatments"],
+        "summary": "Créer un traitement",
         "description": "",
         "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Treatment"
+            }
+          },
           {
             "name": "authorization",
             "in": "header",
@@ -335,16 +659,26 @@
         ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Créé",
+            "schema": {
+              "$ref": "#/definitions/Treatment"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Données invalides"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     },
     "/api/treatments/{id}": {
       "get": {
+        "tags": ["Treatments"],
+        "summary": "Récupérer un traitement par son ID",
         "description": "",
         "parameters": [
           {
@@ -361,14 +695,27 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Traitement",
+            "schema": {
+              "$ref": "#/definitions/Treatment"
+            }
           },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "Non trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "put": {
+        "tags": ["Treatments"],
+        "summary": "Mettre à jour un traitement",
         "description": "",
         "parameters": [
           {
@@ -378,6 +725,14 @@
             "type": "string"
           },
           {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Treatment"
+            }
+          },
+          {
             "name": "authorization",
             "in": "header",
             "type": "string"
@@ -385,11 +740,24 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Mis à jour",
+            "schema": {
+              "$ref": "#/definitions/Treatment"
+            }
+          },
+          "404": {
+            "description": "Non trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "delete": {
+        "tags": ["Treatments"],
+        "summary": "Supprimer un traitement",
         "description": "",
         "parameters": [
           {
@@ -406,13 +774,23 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Supprimé"
+          },
+          "404": {
+            "description": "Non trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     },
     "/api/vaccinations/": {
       "get": {
+        "tags": ["Vaccinations"],
+        "summary": "Récupérer toutes les vaccinations",
         "description": "",
         "parameters": [
           {
@@ -423,31 +801,65 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Liste des vaccinations",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Vaccination"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "post": {
+        "tags": ["Vaccinations"],
+        "summary": "Créer une vaccination",
         "description": "",
         "parameters": [
           {
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Vaccination"
+            }
           }
         ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Créé",
+            "schema": {
+              "$ref": "#/definitions/Vaccination"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Données invalides"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     },
     "/api/vaccinations/{id}": {
       "get": {
+        "tags": ["Vaccinations"],
+        "summary": "Récupérer une vaccination par son ID",
         "description": "",
         "parameters": [
           {
@@ -464,11 +876,24 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Vaccination",
+            "schema": {
+              "$ref": "#/definitions/Vaccination"
+            }
+          },
+          "404": {
+            "description": "Non trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "put": {
+        "tags": ["Vaccinations"],
+        "summary": "Mettre à jour une vaccination",
         "description": "",
         "parameters": [
           {
@@ -481,18 +906,39 @@
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Vaccination"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Mis à jour",
+            "schema": {
+              "$ref": "#/definitions/Vaccination"
+            }
           },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "Non trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "delete": {
+        "tags": ["Vaccinations"],
+        "summary": "Supprimer une vaccination",
         "description": "",
         "parameters": [
           {
@@ -509,13 +955,23 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Supprimé"
+          },
+          "404": {
+            "description": "Non trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     },
     "/api/consultations/": {
       "get": {
+        "tags": ["Consultations"],
+        "summary": "Récupérer toutes les consultations",
         "description": "",
         "parameters": [
           {
@@ -526,31 +982,65 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Liste des consultations",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Consultation"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "post": {
+        "tags": ["Consultations"],
+        "summary": "Créer une consultation",
         "description": "",
         "parameters": [
           {
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Consultation"
+            }
           }
         ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Créé",
+            "schema": {
+              "$ref": "#/definitions/Consultation"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Données invalides"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     },
     "/api/consultations/{id}": {
       "get": {
+        "tags": ["Consultations"],
+        "summary": "Récupérer une consultation par son ID",
         "description": "",
         "parameters": [
           {
@@ -567,11 +1057,24 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Consultation",
+            "schema": {
+              "$ref": "#/definitions/Consultation"
+            }
+          },
+          "404": {
+            "description": "Non trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "put": {
+        "tags": ["Consultations"],
+        "summary": "Mettre à jour une consultation",
         "description": "",
         "parameters": [
           {
@@ -584,15 +1087,36 @@
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Consultation"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Mis à jour",
+            "schema": {
+              "$ref": "#/definitions/Consultation"
+            }
+          },
+          "404": {
+            "description": "Non trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "delete": {
+        "tags": ["Consultations"],
+        "summary": "Supprimer une consultation",
         "description": "",
         "parameters": [
           {
@@ -609,13 +1133,23 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Supprimé"
+          },
+          "404": {
+            "description": "Non trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     },
     "/api/animals/": {
       "get": {
+        "tags": ["Animals"],
+        "summary": "Récupérer tous les animaux",
         "description": "",
         "parameters": [
           {
@@ -626,38 +1160,73 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Liste des animaux",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Animal"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "post": {
+        "tags": ["Animals"],
+        "summary": "Créer un animal",
         "description": "",
         "parameters": [
           {
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Animal"
+            }
           }
         ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Animal créé",
+            "schema": {
+              "$ref": "#/definitions/Animal"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Données invalides"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     },
     "/api/animals/{id}": {
       "get": {
+        "tags": ["Animals"],
+        "summary": "Récupérer un animal par son ID",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "ID de l'animal (UUID)"
           },
           {
             "name": "authorization",
@@ -667,11 +1236,24 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Animal",
+            "schema": {
+              "$ref": "#/definitions/Animal"
+            }
+          },
+          "404": {
+            "description": "Non trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "put": {
+        "tags": ["Animals"],
+        "summary": "Mettre à jour un animal",
         "description": "",
         "parameters": [
           {
@@ -684,15 +1266,36 @@
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Animal"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Animal mis à jour",
+            "schema": {
+              "$ref": "#/definitions/Animal"
+            }
+          },
+          "404": {
+            "description": "Non trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "delete": {
+        "tags": ["Animals"],
+        "summary": "Supprimer un animal",
         "description": "",
         "parameters": [
           {
@@ -709,916 +1312,299 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Supprimé"
+          },
+          "404": {
+            "description": "Non trouvé"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     },
     "/api/auth/login": {
       "post": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/": {
-      "get": {
-        "description": "",
+        "tags": ["Auth"],
+        "summary": "Authentification utilisateur",
+        "description": "Retourne un JWT si les identifiants sont valides.",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/{id}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
+            "name": "body",
+            "in": "body",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/LoginRequest"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Authentifié",
+            "schema": {
+              "$ref": "#/definitions/LoginResponse"
+            }
           },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      },
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "204": {
-            "description": "No Content"
-          }
-        }
-      }
-    },
-    "/login": {
-      "post": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
+          "401": {
+            "description": "Identifiants invalides"
           }
         }
       }
     }
   },
   "definitions": {
-    "Owner": {
+    "LoginRequest": {
       "type": "object",
       "properties": {
-        "type": {
+        "email": {
           "type": "string",
-          "example": "object"
+          "example": "kiki@outlook.fr"
         },
-        "properties": {
-          "type": "object",
-          "properties": {
-            "id_owner": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "uuid"
-                }
-              }
-            },
-            "id_user": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "uuid"
-                }
-              }
-            },
-            "last_name": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "maxLength": {
-                  "type": "number",
-                  "example": 30
-                }
-              }
-            },
-            "first_name": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "maxLength": {
-                  "type": "number",
-                  "example": 30
-                }
-              }
-            },
-            "phone": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "maxLength": {
-                  "type": "number",
-                  "example": 20
-                }
-              }
-            },
-            "email": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "email"
-                },
-                "maxLength": {
-                  "type": "number",
-                  "example": 150
-                }
-              }
-            },
-            "adress": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                }
-              }
-            }
-          }
-        },
-        "required": {
-          "type": "array",
-          "example": [
-            "id_user",
-            "last_name",
-            "first_name",
-            "phone",
-            "email",
-            "adress"
-          ],
-          "items": {
-            "type": "string"
-          }
+        "password": {
+          "type": "string",
+          "example": "password123"
+        }
+      }
+    },
+    "LoginResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "example": "eyJhbGciOi..."
         }
       }
     },
     "User": {
       "type": "object",
       "properties": {
-        "type": {
+        "id_user": {
           "type": "string",
-          "example": "object"
+          "example": "uuid"
         },
-        "properties": {
-          "type": "object",
-          "properties": {
-            "id_user": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "uuid"
-                }
-              }
-            },
-            "password": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "maxLength": {
-                  "type": "number",
-                  "example": 255
-                }
-              }
-            },
-            "email": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "email"
-                },
-                "maxLength": {
-                  "type": "number",
-                  "example": 150
-                }
-              }
-            },
-            "user_role": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "enum": {
-                  "type": "array",
-                  "example": [
-                    "owner",
-                    "veterinarian",
-                    "admin"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
+        "first_name": {
+          "type": "string",
+          "example": "Tata"
         },
-        "required": {
-          "type": "array",
-          "example": [
-            "password",
-            "email"
-          ],
-          "items": {
-            "type": "string"
-          }
+        "last_name": {
+          "type": "string",
+          "example": "Toto"
+        },
+        "phone": {
+          "type": "string",
+          "example": "1234567890"
+        },
+        "email": {
+          "type": "string",
+          "example": "user@example.com"
+        },
+        "adress": {
+          "type": "string",
+          "example": "157 rue ..."
+        },
+        "user_role": {
+          "type": "string",
+          "example": "owner"
+        }
+      }
+    },
+    "Owner": {
+      "type": "object",
+      "properties": {
+        "id_owner": {
+          "type": "string",
+          "example": "uuid"
+        },
+        "id_user": {
+          "type": "string",
+          "example": "uuid"
+        },
+        "first_name": {
+          "type": "string",
+          "example": "Tata"
+        },
+        "last_name": {
+          "type": "string",
+          "example": "Toto"
+        },
+        "phone": {
+          "type": "string",
+          "example": "1234567890"
+        },
+        "email": {
+          "type": "string",
+          "example": "owner@example.com"
+        },
+        "adress": {
+          "type": "string",
+          "example": "157 rue ..."
         }
       }
     },
     "Veterinarian": {
       "type": "object",
       "properties": {
-        "type": {
+        "id_veterinarian": {
           "type": "string",
-          "example": "object"
+          "example": "uuid"
         },
-        "properties": {
-          "type": "object",
-          "properties": {
-            "id_veterinarian": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "uuid"
-                }
-              }
-            },
-            "id_user": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "uuid"
-                }
-              }
-            },
-            "last_name": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "maxLength": {
-                  "type": "number",
-                  "example": 30
-                }
-              }
-            },
-            "first_name": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "maxLength": {
-                  "type": "number",
-                  "example": 30
-                }
-              }
-            },
-            "phone": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "maxLength": {
-                  "type": "number",
-                  "example": 20
-                }
-              }
-            },
-            "email": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "email"
-                },
-                "maxLength": {
-                  "type": "number",
-                  "example": 150
-                }
-              }
-            },
-            "adress": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                }
-              }
-            }
-          }
+        "id_user": {
+          "type": "string",
+          "example": "uuid"
         },
-        "required": {
-          "type": "array",
-          "example": [
-            "id_user",
-            "last_name",
-            "first_name",
-            "phone",
-            "email",
-            "adress"
-          ],
-          "items": {
-            "type": "string"
-          }
+        "first_name": {
+          "type": "string",
+          "example": "Jean"
+        },
+        "last_name": {
+          "type": "string",
+          "example": "Dupont"
+        },
+        "phone": {
+          "type": "string",
+          "example": "0612345678"
+        },
+        "email": {
+          "type": "string",
+          "example": "jean.dupont@clinic.fr"
+        },
+        "adress": {
+          "type": "string",
+          "example": "10 rue de la Clinique"
         }
       }
     },
     "Animal": {
       "type": "object",
       "properties": {
-        "type": {
+        "id_animal": {
           "type": "string",
-          "example": "object"
+          "example": "uuid"
         },
-        "properties": {
-          "type": "object",
-          "properties": {
-            "id_animal": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "uuid"
-                }
-              }
-            },
-            "id_owner": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "uuid"
-                }
-              }
-            },
-            "name": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "maxLength": {
-                  "type": "number",
-                  "example": 50
-                }
-              }
-            },
-            "breed": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "maxLength": {
-                  "type": "number",
-                  "example": 50
-                }
-              }
-            },
-            "chip_number": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "maxLength": {
-                  "type": "number",
-                  "example": 50
-                }
-              }
-            },
-            "birth_date": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "date"
-                }
-              }
-            },
-            "weight": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "number"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "decimal"
-                }
-              }
-            },
-            "size": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "number"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "decimal"
-                }
-              }
-            },
-            "photo": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "uri"
-                }
-              }
-            }
-          }
-        },
-        "required": {
-          "type": "array",
-          "example": [
-            "id_owner",
-            "name",
-            "breed",
-            "birth_date",
-            "weight",
-            "size"
-          ],
-          "items": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "Consultation": {
-      "type": "object",
-      "properties": {
-        "type": {
+        "id_owner": {
           "type": "string",
-          "example": "object"
+          "example": "uuid"
         },
-        "properties": {
-          "type": "object",
-          "properties": {
-            "id_consultation": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "uuid"
-                }
-              }
-            },
-            "id_animal": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "uuid"
-                }
-              }
-            },
-            "id_veterinarian": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "uuid"
-                }
-              }
-            },
-            "date_visite": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "date"
-                }
-              }
-            },
-            "reason": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                }
-              }
-            },
-            "diagnosis": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                }
-              }
-            }
-          }
+        "name": {
+          "type": "string",
+          "example": "Rex"
         },
-        "required": {
-          "type": "array",
-          "example": [
-            "id_animal",
-            "id_veterinarian",
-            "date_visite",
-            "reason",
-            "diagnosis"
-          ],
-          "items": {
-            "type": "string"
-          }
+        "breed": {
+          "type": "string",
+          "example": "Labrador"
+        },
+        "chip_number": {
+          "type": "string",
+          "example": "123456789"
+        },
+        "birth_date": {
+          "type": "string",
+          "example": "2025-12-17T00:00:00.000Z"
+        },
+        "weight": {
+          "type": "number",
+          "example": 30
+        },
+        "size": {
+          "type": "number",
+          "example": 60
+        },
+        "photo": {
+          "type": "string",
+          "example": "http://example.com/photo.jpg"
         }
       }
     },
     "Treatment": {
       "type": "object",
       "properties": {
-        "type": {
+        "id_treatment": {
           "type": "string",
-          "example": "object"
+          "example": "uuid"
         },
-        "properties": {
-          "type": "object",
-          "properties": {
-            "id_treatment": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "uuid"
-                }
-              }
-            },
-            "id_animal": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "uuid"
-                }
-              }
-            },
-            "name_treatment": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "maxLength": {
-                  "type": "number",
-                  "example": 30
-                }
-              }
-            },
-            "dosage": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                }
-              }
-            },
-            "start_date": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "date"
-                }
-              }
-            },
-            "end_date": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "date"
-                }
-              }
-            },
-            "comment": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                }
-              }
-            }
-          }
+        "id_animal": {
+          "type": "string",
+          "example": "uuid"
         },
-        "required": {
-          "type": "array",
-          "example": [
-            "id_animal",
-            "name_treatment",
-            "dosage",
-            "start_date",
-            "end_date"
-          ],
-          "items": {
-            "type": "string"
-          }
+        "name_treatment": {
+          "type": "string",
+          "example": "Loperamide"
+        },
+        "dosage": {
+          "type": "string",
+          "example": "1 comprimé matin et soir"
+        },
+        "start_date": {
+          "type": "string",
+          "example": "2025-12-17T00:00:00.000Z"
+        },
+        "end_date": {
+          "type": "string",
+          "example": "2025-12-24T00:00:00.000Z"
+        },
+        "comment": {
+          "type": "string",
+          "example": "Après repas"
         }
       }
     },
     "Vaccination": {
       "type": "object",
       "properties": {
-        "type": {
+        "id_vaccination": {
           "type": "string",
-          "example": "object"
+          "example": "uuid"
         },
-        "properties": {
-          "type": "object",
-          "properties": {
-            "id_vaccination": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "uuid"
-                }
-              }
-            },
-            "id_animal": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "uuid"
-                }
-              }
-            },
-            "vaccine_name": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "maxLength": {
-                  "type": "number",
-                  "example": 30
-                }
-              }
-            },
-            "vaccine_date": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "date"
-                }
-              }
-            },
-            "reminder_date": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "date"
-                }
-              }
-            },
-            "comment": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                }
-              }
-            }
-          }
+        "id_animal": {
+          "type": "string",
+          "example": "uuid"
         },
-        "required": {
-          "type": "array",
-          "example": [
-            "id_animal",
-            "vaccine_name",
-            "vaccine_date",
-            "reminder_date"
-          ],
-          "items": {
-            "type": "string"
-          }
+        "vaccine_name": {
+          "type": "string",
+          "example": "Rage"
+        },
+        "vaccine_date": {
+          "type": "string",
+          "example": "2025-12-17T00:00:00.000Z"
+        },
+        "reminder_date": {
+          "type": "string",
+          "example": "2025-12-17T00:00:00.000Z"
+        },
+        "comment": {
+          "type": "string",
+          "example": "Rappel annuel"
+        }
+      }
+    },
+    "Consultation": {
+      "type": "object",
+      "properties": {
+        "id_consultation": {
+          "type": "string",
+          "example": "uuid"
+        },
+        "id_animal": {
+          "type": "string",
+          "example": "uuid"
+        },
+        "id_veterinarian": {
+          "type": "string",
+          "example": "uuid"
+        },
+        "date_visite": {
+          "type": "string",
+          "example": "2025-12-17T00:00:00.000Z"
+        },
+        "reason": {
+          "type": "string",
+          "example": "Boiterie depuis 2 jours"
+        },
+        "diagnosis": {
+          "type": "string",
+          "example": "Entorse légère"
         }
       }
     }
