@@ -10,7 +10,7 @@ import { Request, Response, NextFunction } from "express";
 export async function getOwnersController(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const page = req.query.page ? Number(req.query.page) : undefined;
@@ -26,7 +26,7 @@ export async function getOwnersController(
 export async function getOwnerByIdController(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const owner = await getOwnerById(req.params.id);
@@ -39,7 +39,7 @@ export async function getOwnerByIdController(
 export async function createOwnerController(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const data = req.body;
@@ -53,7 +53,7 @@ export async function createOwnerController(
 export async function updateOwnerController(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const id = req.params.id;
@@ -68,7 +68,7 @@ export async function updateOwnerController(
 export async function deleteOwnerController(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const id = req.params.id;

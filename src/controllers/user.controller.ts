@@ -10,7 +10,7 @@ import {
 export async function getUsersController(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const users = await getUsers();
@@ -23,7 +23,7 @@ export async function getUsersController(
 export async function createUserController(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const user = await createUser(req.body);
@@ -36,7 +36,7 @@ export async function createUserController(
 export async function getUserByIdController(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const { id } = req.params;
@@ -50,7 +50,7 @@ export async function getUserByIdController(
 export async function deleteUserController(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const { id } = req.params;
@@ -64,7 +64,7 @@ export async function deleteUserController(
 export async function updateUserController(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const { id } = req.params;
